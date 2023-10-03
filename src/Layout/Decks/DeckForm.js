@@ -1,41 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useHistory, useLocation } from "react-router-dom";
-import { readDeck, updateDeck } from "../../utils/api/";
+import { Link, useHistory, useParams, useLocation } from "react-router-dom";
+import { createDeck, readDeck, updateDeck } from "../../utils/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
-function EditDeck() {
+function DeckForm({ type, setUpdateServer }) {
   const history = useHistory();
   const location = useLocation();
 
+  const homeIcon = <FontAwesomeIcon icon={faHouse} />;
+
+  let pageTitle = "";
+  if(type === "edit"){
+    pageTitle = "Edit Deck";
+  }
+  else if(type === "create"){
+    pageTitle = "Create Deck";
+  }
+
   console.log(location);
-  
+
   const { deckId } = useParams();
   const [deckName, setDeckName] = useState("");
   const [deckDescription, setDeckDescription] = useState("");
-  const [_error, setError] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     const abortController = new AbortController();
+    if(type === "edit"){
     readDeck(deckId, abortController.signal)
-      .then((response) => {
-        setDeckName(response.name);
-        setDeckDescription(response.description);
-        console.log(response);
-        console.log(
-          "Deck Id: ",
-          deckId,
-          "Deck Name: ",
-          deckName,
-          "Deck Description: ",
-          deckDescription
-        );
-      })
-      .catch((error) => setError(error));
+    .then((response) => {
+      setDeckName(response.name);
+      setDeckDescription(response.description);
+    })
+    .catch((error) => setError(error));
+  }
 
     return () => abortController.abort();
-  }, [deckId,deckName,deckDescription]);
+  }, [deckId, type]);
 
   const changeHandler = (e) => {
-    console.log(e.target.id);
     if (e.target.name === "deckName") {
       setDeckName(e.target.value);
     } else if (e.target.name === "deckDescription") {
@@ -46,28 +50,63 @@ function EditDeck() {
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(e.target.value);
-    await updateDeck({ id: deckId, name: deckName, description: deckDescription });
-    history.push(`/decks/${deckId}`);
+    if (type === "edit") {
+      await updateDeck({
+        id: deckId,
+        name: deckName,
+        description: deckDescription,
+      });
+      setUpdateServer(true);
+      history.push(`/decks/${deckId}`);
+    } else if (type === "create") {
+      await createDeck({ name: deckName, description: deckDescription });
+      setUpdateServer(true);
+      history.push("/");
+    }
   };
 
-  const cancelHandler = () => history.push(`/decks/${deckId}`);
+  const cancelHandler = () => {
+    if (type === "edit") {
+      history.push(`/decks/${deckId}`);
+    } else if (type === "create") {
+      history.push("/");
+    }
+  };
+
+  if (error) {
+    return (
+      <>
+        <p>{error.message}</p>
+      </>
+    );
+  }
 
   return (
     <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <Link to="/">Home</Link>
+            <Link to="/">{homeIcon} Home</Link>
           </li>
-          <li className="breadcrumb-item">
-            <Link to={`/decks/${deckId}`}>{deckName}</Link>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            <Link to={location}>Edit Deck</Link>
-          </li>
+          {type === "edit" ? (
+            <>
+              <li className="breadcrumb-item">
+                <Link to={`/decks/${deckId}`}>{deckName}</Link>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                <Link to={location}>Edit Deck</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="breadcrumb-item active" aria-current="page">
+                <Link to={`/decks/`}>New Deck</Link>
+              </li>
+            </>
+          )}
         </ol>
       </nav>
-      <h2>Edit Deck</h2>
+      <h2>{pageTitle}</h2>
       <form>
         <div className="form-group">
           <div className="row py-2 mx-0">
@@ -118,4 +157,4 @@ function EditDeck() {
   );
 }
 
-export default EditDeck;
+export default DeckForm;

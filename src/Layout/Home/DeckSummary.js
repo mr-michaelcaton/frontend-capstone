@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, useHistory} from 'react-router-dom'
-import {listDecks,deleteDeck} from '../../utils/api'
+import {deleteDeck} from '../../utils/api'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBookBookmark, faEye,faTrashCan} from '@fortawesome/free-solid-svg-icons'
 

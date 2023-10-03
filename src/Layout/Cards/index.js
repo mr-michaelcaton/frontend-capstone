@@ -4,9 +4,8 @@ import {
   Switch,
   useRouteMatch,
 } from "react-router-dom/cjs/react-router-dom.min";
-import AddCards from "./AddCard";
-import EditCard from "./EditCard";
 import NotFound from "../NotFound";
+import CardForm from "./CardForm";
 
 function CardLayout({updateServer,setUpdateServer}) {
   const { path } = useRouteMatch();
@@ -18,10 +17,10 @@ function CardLayout({updateServer,setUpdateServer}) {
     <>
       <Switch>
         <Route exact path={`${path}/new`}>
-          <AddCards setUpdateServer={setUpdateServer}/>
+          <CardForm type="create"setUpdateServer={setUpdateServer}/>
         </Route>
         <Route exact path={`${path}/:cardId/edit`}>
-          <EditCard setUpdateServer={setUpdateServer}/>
+          <CardForm type="edit"setUpdateServer={setUpdateServer}/>
         </Route>
         <Route>
           <NotFound />

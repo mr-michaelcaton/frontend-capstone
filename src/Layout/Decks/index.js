@@ -1,14 +1,13 @@
-import React, { useState} from "react";
+import React from "react";
 import {
   Route,
   Switch,
   useRouteMatch,
 } from "react-router-dom/cjs/react-router-dom.min";
 import Deck from "./Deck";
-import CreateDeck from "../Home/CreateDeck";
-import EditDeck from "./EditDeck";
 import StudyDeckLayout from "./StudyDeckLayout";
 import CardLayout from "../Cards";
+import DeckForm from "./DeckForm";
 
 function DeckLayout({updateServer, currentData,setUpdateServer}) {
   const { path } = useRouteMatch();
@@ -19,13 +18,13 @@ function DeckLayout({updateServer, currentData,setUpdateServer}) {
     <>
         <Switch>
           <Route exact path={`${path}/new`}>
-            <CreateDeck setUpdateServer={setUpdateServer}/>
+            <DeckForm type={"create"}setUpdateServer={setUpdateServer}/>
           </Route>
           <Route exact path={`${path}/:deckId`}>
             <Deck currentData={currentData} updateServer={updateServer} setUpdateServer={setUpdateServer}/>
           </Route>
           <Route exact path={`${path}/:deckId/edit`}>
-            <EditDeck setUpdateServer={setUpdateServer}/>
+            <DeckForm type={"edit"} setUpdateServer={setUpdateServer}/>
           </Route>
           <Route exact path={`${path}/:deckId/study`}>
             <StudyDeckLayout />

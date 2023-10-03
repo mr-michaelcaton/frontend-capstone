@@ -13,7 +13,7 @@ function Layout() {
 
   const [updateServer, setUpdateServer] = useState(true);
   const [currentData, setCurrentData] = useState(undefined);
-  const [_error, setError] = useState(undefined);
+  const [error, setError] = useState(undefined);
   
   useEffect(() => {
     const abortController = new AbortController();
@@ -31,6 +31,14 @@ function Layout() {
 
   console.log("Update Server @ Top Level: ",updateServer);
 
+
+  if (error) {
+    return (
+      <>
+        <p>{error.message}</p>
+      </>
+    );
+  }
 
   return (
     <>

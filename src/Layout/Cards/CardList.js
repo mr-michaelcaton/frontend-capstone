@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Card from "./Card";
 import { readDeck } from "../../utils/api";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
-function CardList({updateServer, setUpdateServer}) {
+function CardList({ updateServer, setUpdateServer }) {
   const params = useParams();
   const deckId = params.deckId;
 
   const [deck, setDeck] = useState(null);
-  const [_error, setError] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -23,7 +20,15 @@ function CardList({updateServer, setUpdateServer}) {
       .catch((error) => setError(error));
 
     return () => abortController.abort();
-  }, [deckId,updateServer]);
+  }, [deckId, updateServer]);
+
+  if (error) {
+    return (
+      <>
+        <p>{error.message}</p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -31,9 +36,14 @@ function CardList({updateServer, setUpdateServer}) {
         <h3>Loading...</h3>
       ) : (
         <>
-          {deck.cards && deck.cards.map((card) =>
-            <Card key={`${deck.id}.${card.id}`} card={card} setUpdateServer={setUpdateServer}/>
-          )}
+          {deck.cards &&
+            deck.cards.map((card) => (
+              <Card
+                key={`${deck.id}.${card.id}`}
+                card={card}
+                setUpdateServer={setUpdateServer}
+              />
+            ))}
         </>
       )}
     </>

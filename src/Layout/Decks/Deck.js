@@ -25,7 +25,7 @@ function Deck({updateServer, setUpdateServer}) {
   const homeIcon = <FontAwesomeIcon icon={faHouse}/>
 
   const [deck, setDeck] = useState(null);
-  const [_error, setError] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   const { url } = useRouteMatch();
   console.log(url);
@@ -52,6 +52,14 @@ function Deck({updateServer, setUpdateServer}) {
       history.push(`/decks/${deckId}`);
     }
   };
+
+  if (error) {
+    return (
+      <>
+        <p>{error.message}</p>
+      </>
+    );
+  }
 
   return (
     <>

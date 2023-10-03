@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
-import CreateDeck from "./CreateDeck";
+import DeckForm from "../Decks/DeckForm"
 
 function HomeLayout({currentData,setUpdateServer}) {
 
@@ -12,7 +12,7 @@ function HomeLayout({currentData,setUpdateServer}) {
           <Home currentData={currentData} setUpdateServer={setUpdateServer}/>
         </Route>
         <Route exact path="/decks/new">
-          <CreateDeck setUpdateServer={setUpdateServer} />
+          <DeckForm type="create" setUpdateServer={setUpdateServer} />
         </Route>
       </Switch>
     </>
