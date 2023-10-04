@@ -36,7 +36,7 @@ function CardForm({ type, setUpdateServer }) {
         .catch((error) => setError(error));
     }
     return () => abortController.abort();
-  }, [cardId]);
+  }, [cardId,setCardFront,setCardBack]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -45,7 +45,7 @@ function CardForm({ type, setUpdateServer }) {
       .catch((error) => setError(error));
 
     return () => abortController.abort();
-  }, [deckId]);
+  }, [deckId,setDeck]);
 
   const changeHandler = (e) => {
     if (e.target.name === "cardFront") {

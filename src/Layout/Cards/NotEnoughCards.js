@@ -14,7 +14,7 @@ function NotEnoughCards({ deck }) {
     if (cards) {
       setCardLength(cards.length);
     }
-  }, [cards]);
+  }, [cards,setCardLength]);
 
   return (
     <>

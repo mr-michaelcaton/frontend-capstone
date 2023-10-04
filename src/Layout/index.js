@@ -27,7 +27,7 @@ function Layout() {
     .catch(error => setError(error));
   }
     return () => abortController.abort();
-  },[updateServer]);
+  },[updateServer,setCurrentData]);
 
   console.log("Update Server @ Top Level: ",updateServer);
 

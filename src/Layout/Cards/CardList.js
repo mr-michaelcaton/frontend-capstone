@@ -20,7 +20,7 @@ function CardList({ updateServer, setUpdateServer }) {
       .catch((error) => setError(error));
 
     return () => abortController.abort();
-  }, [deckId, updateServer]);
+  }, [deckId, updateServer,setDeck]);
 
   if (error) {
     return (

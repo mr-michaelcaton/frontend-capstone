@@ -37,7 +37,7 @@ function DeckForm({ type, setUpdateServer }) {
   }
 
     return () => abortController.abort();
-  }, [deckId, type]);
+  }, [deckId, type,setDeckName,setDeckDescription]);
 
   const changeHandler = (e) => {
     if (e.target.name === "deckName") {

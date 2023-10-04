@@ -40,7 +40,7 @@ function Deck({updateServer, setUpdateServer}) {
       .catch((error) => setError(error));
 
     return () => abortController.abort();
-  }, [deckId]);
+  }, [deckId,setDeck]);
 
   const deleteHandler = async (id) => {
     const result = window.confirm(
