@@ -145,7 +145,6 @@ function CardForm({ type, setUpdateServer }) {
           </div>
           <div>
             <button
-              type="button"
               className="btn btn-secondary"
               onClick={cancelHandler}
             >
