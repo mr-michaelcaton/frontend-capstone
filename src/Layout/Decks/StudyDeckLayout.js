@@ -15,7 +15,7 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 function StudyDeckLayout() {
   const { deckId } = useParams();
   const homeIcon = <FontAwesomeIcon icon={faHouse} />
-
+  
   const [deck, setDeck] = useState(null);
   const [flipped, setFlipped] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -32,7 +32,7 @@ function StudyDeckLayout() {
       })
       .catch((error) => setError(error));
     return () => abortController.abort();
-  }, [deckId]);
+  }, [deckId,setDeck]);
 
   //click handlers
   const flipHandler = () => {

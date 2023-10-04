@@ -27,7 +27,7 @@ function DeckLayout({updateServer, currentData,setUpdateServer}) {
             <DeckForm type={"edit"} setUpdateServer={setUpdateServer}/>
           </Route>
           <Route exact path={`${path}/:deckId/study`}>
-            <StudyDeckLayout />
+            <StudyDeckLayout/>
           </Route>
           <Route path="/decks/:deckId/cards">
             <CardLayout updateServer={updateServer}setUpdateServer={setUpdateServer}/>

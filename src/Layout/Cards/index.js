@@ -7,11 +7,8 @@ import {
 import NotFound from "../NotFound";
 import CardForm from "./CardForm";
 
-function CardLayout({updateServer,setUpdateServer}) {
+function CardLayout({setUpdateServer}) {
   const { path } = useRouteMatch();
-
-  console.log(`At deck index page, setUpdateServer is: `, setUpdateServer)
-
   
   return (
     <>

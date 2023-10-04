@@ -127,7 +127,7 @@ function Deck({updateServer, setUpdateServer}) {
       </div>
       <div className="py-3">
         <h3>Cards</h3>
-        <CardList updateServer={updateServer}setUpdateServer={setUpdateServer} />
+        <CardList deck={deck}updateServer={updateServer}setUpdateServer={setUpdateServer} />
       </div>
     </>
   );
