@@ -25,16 +25,15 @@ function CardForm({ type, setUpdateServer }) {
   const [deck, setDeck] = useState(null);
   const [error, setError] = useState(null);
 
-  
   useEffect(() => {
     const abortController = new AbortController();
-    if(cardId){
-    readCard(cardId, abortController.signal)
-      .then((response) => {
-        setCardFront(response.front);
-        setCardBack(response.back);
-      })
-      .catch((error) => setError(error));
+    if (cardId) {
+      readCard(cardId, abortController.signal)
+        .then((response) => {
+          setCardFront(response.front);
+          setCardBack(response.back);
+        })
+        .catch((error) => setError(error));
     }
     return () => abortController.abort();
   }, [cardId]);
@@ -67,9 +66,7 @@ function CardForm({ type, setUpdateServer }) {
       });
       setUpdateServer(true);
       history.push(`/decks/${deckId}`);
-    } 
-    
-    else if (type === "create") {
+    } else if (type === "create") {
       await createCard(deckId, { front: cardFront, back: cardBack });
       setUpdateServer(true);
       history.push(`/decks/${deckId}/cards/new`);
@@ -85,7 +82,7 @@ function CardForm({ type, setUpdateServer }) {
       </>
     );
   }
-  
+
   return (
     <div>
       <nav aria-label="breadcrumb">
@@ -93,7 +90,9 @@ function CardForm({ type, setUpdateServer }) {
           <li className="breadcrumb-item">
             <Link to="/">{homeIcon} Home</Link>
           </li>
-          {deck && type === "edit" ? (
+          {!deck ? (
+            <h2>Loading...</h2>
+          ) : type === "edit" ? (
             <>
               <li className="breadcrumb-item">
                 <Link to={`/decks/${deckId}`}>{deck.name}</Link>
@@ -104,6 +103,9 @@ function CardForm({ type, setUpdateServer }) {
             </>
           ) : (
             <>
+              <li className="breadcrumb-item">
+                <Link to={`/decks/${deckId}`}>{deck.name}</Link>
+              </li>
               <li className="breadcrumb-item active" aria-current="page">
                 <Link to={`/decks/${deckId}/cards/new`}>New Card</Link>
               </li>
@@ -147,14 +149,14 @@ function CardForm({ type, setUpdateServer }) {
               className="btn btn-secondary"
               onClick={cancelHandler}
             >
-              Cancel
+              Done
             </button>
             <button
               type="submit"
               className="btn btn-primary mx-2"
               onClick={submitHandler}
             >
-              Submit
+              Save
             </button>
           </div>
         </div>
